@@ -22,8 +22,16 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false" id="navbarDropdownAdmin">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                                <li>
+                                    <a class="dropdown-item" href="/admin/blogs/add">Add Blog Post</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
