@@ -1,0 +1,31 @@
+﻿@page
+@model Bloggie.Web.Pages.Admin.Blogs.ListModel
+@{
+}
+
+
+<div class="bg-secondary bg-opacity-10 py-2 mb-5">
+	<div class="container">
+		<h1>Blog Posts</h1>
+	</div>
+</div>
+
+<div class="container">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Heading</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var BlogPost in Model.BlogPosts)
+			{
+				<tr>
+					<td>@BlogPost.Id</td>
+					<td>@BlogPost.Heading</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
