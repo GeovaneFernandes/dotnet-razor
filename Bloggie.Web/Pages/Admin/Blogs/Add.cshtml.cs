@@ -38,6 +38,9 @@ namespace Bloggie.Web.Pages.Admin.Blogs
             };
 
             await blogPostRepository.AddAsync(blogPost);
+
+            TempData["MessageDescription"] = "New Blog Post Created!";
+
             return RedirectToPage("/Admin/Blogs/List");
         }
     }
