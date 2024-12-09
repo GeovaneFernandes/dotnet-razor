@@ -1,6 +1,7 @@
 using Bloggie.Web.Data;
 using Bloggie.Web.Models.Domain;
 using Bloggie.Web.Models.ViewModels;
+using Bloggie.Web.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,14 +9,14 @@ namespace Bloggie.Web.Pages.Admin.Blogs
 {
     public class AddModel : PageModel
     {
-        private readonly BloggieDbContext bloggieDbContext;
+        private readonly IBlogPostRepository blogPostRepository;
 
         [BindProperty]
         public AddBlogPost AddBlogPostRequest { get; set; }
 
-        public AddModel(BloggieDbContext bloggieDbContext)
-        {
-            this.bloggieDbContext = bloggieDbContext;
+        public AddModel(IBlogPostRepository blogPostRepository)
+        {            
+            this.blogPostRepository = blogPostRepository;
         }
 
         public void OnGet()
@@ -36,9 +37,7 @@ namespace Bloggie.Web.Pages.Admin.Blogs
                 Visible = AddBlogPostRequest.Visible
             };
 
-            await bloggieDbContext.BlogPosts.AddAsync(blogPost);
-            await bloggieDbContext.SaveChangesAsync();
-
+            await blogPostRepository.AddAsync(blogPost);
             return RedirectToPage("/Admin/Blogs/List");
         }
     }
