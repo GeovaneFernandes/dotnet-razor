@@ -10,18 +10,8 @@
 	</div>
 </div>
 
-@{
-	var messageDescription = (string)ViewData["MessageDescription"];
-	if (!string.IsNullOrWhiteSpace(messageDescription))
-	{	<div class="container">
-			<div class="alert alert-success alert-dismissible fade show mb-5">
-				@Html.Raw(messageDescription)
-				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-			</div>
-		</div>
-	}
-}
 
+<partial name="_Notification">
 
 
 @if (Model.BlogPost != null)
