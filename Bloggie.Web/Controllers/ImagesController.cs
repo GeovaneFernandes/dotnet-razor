@@ -6,10 +6,10 @@ namespace Bloggie.Web.Controllers
     [Route("api/[controller]")]
     public class ImagesController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        [HttpPost]
+        public async Task<IActionResult> UploadAsync(IFormFile file)
         {
-            return Ok("This is the Images GET method!");
+
         }
     }
 }
