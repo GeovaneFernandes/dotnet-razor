@@ -13,6 +13,7 @@ builder.Services.AddDbContext<BloggieDbContext>(options =>
 });
 
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepositoryCloudinary>();
 
 var app = builder.Build();
 
