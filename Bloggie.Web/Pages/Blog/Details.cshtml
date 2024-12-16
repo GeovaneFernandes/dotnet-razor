@@ -20,6 +20,16 @@
 					</span>
 				</div>
 
+				<div class="mb-3">
+					@if (Model.BlogPost.Tags != null)
+					{
+						foreach (var tag in Model.BlogPost.Tags)
+						{
+							<span class="badge bg-dark">@tag.Name</span>
+						}
+					}
+				</div>
+
 				<img src="@Model.BlogPost.FeaturedImageUrl" class="d-block img-fluid mb-3"/>
 
 				<div class="mb-3 blog-details">
