@@ -31,9 +31,11 @@
                 { 
                     foreach(var tag in Model.Tags)
                     {
-                        <span class="badge bg-dark">
-                            @tag.Name
-                        </span>
+                        <a href="/tags/@tag.Name">
+                            <span class="badge bg-dark">
+                                @tag.Name
+                            </span>
+                        </a>
                     }
                 }
             </div>
