@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bloggie.Web.Data
 {
-    public class BloggieDbContext(DbContextOptions options) : DbContext(options)
+    public class BloggieDbContext(DbContextOptions<BloggieDbContext> options) : DbContext(options)
     {
         public required DbSet<BlogPost> BlogPosts { get; set; }
         public required DbSet<Tag> Tags { get; set; }

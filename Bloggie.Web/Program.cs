@@ -2,6 +2,7 @@ using Bloggie.Web.Data;
 using Bloggie.Web.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics; // Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +15,13 @@ builder.Services.AddDbContext<BloggieDbContext>(options =>
 });
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
-options.UseSqlServer(
-    builder.Configuration.GetConnectionString("BloggieAuthDbConnectionString")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieAuthDbConnectionString"));
+    options.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-.AddEntityFrameworkStores<AuthDbContext>();
+    .AddEntityFrameworkStores<AuthDbContext>();
 
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepositoryCloudinary>();

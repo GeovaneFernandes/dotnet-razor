@@ -6,7 +6,7 @@ namespace Bloggie.Web.Data
 {
     public class AuthDbContext : IdentityDbContext
     {
-        public AuthDbContext(DbContextOptions options) : base(options)
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
         }
 
@@ -75,9 +75,9 @@ namespace Bloggie.Web.Data
 
                 new IdentityUserRole<string>
                 {
-                    RoleId = adminRoleId,
-                    UserId = userRoleId
-                },
+                    RoleId = userRoleId,
+                    UserId = superAdminId
+                }
             };
 
             builder.Entity<IdentityUserRole<string>>().HasData(superAdminRoles);

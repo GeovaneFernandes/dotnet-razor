@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bloggie.Web.Migrations
 {
     [DbContext(typeof(BloggieDbContext))]
-    [Migration("20241213202918_Adding Tags Navigation Property")]
-    partial class AddingTagsNavigationProperty
+    [Migration("20241219001241_Adding Bloggie Context")]
+    partial class AddingBloggieContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
