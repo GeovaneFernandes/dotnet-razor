@@ -29,14 +29,21 @@ namespace Bloggie.Web.Pages
                 Email = RegisterViewModel.Email
             };
             var identityResult = await userManager.CreateAsync(user, RegisterViewModel.Password);
+
             if (identityResult.Succeeded)
             {
-                ViewData["Notification"] = new Notification
+
+                var addRolesResult = await userManager.AddToRoleAsync(user, "User");
+
+                if (addRolesResult.Succeeded) 
                 {
-                    Type = Enums.NotificationType.Success,
-                    Message = "User created successfully."
-                };
-                return Page();
+                    ViewData["Notification"] = new Notification
+                    {
+                        Type = Enums.NotificationType.Success,
+                        Message = "User created successfully."
+                    };
+                    return Page();
+                }               
             }
             ViewData["Notification"] = new Notification
             {
