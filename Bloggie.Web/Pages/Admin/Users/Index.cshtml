@@ -19,31 +19,43 @@
 				Add User
 			</button>
 		</div>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>
-						Id
-					</th>
-					<th>
-						Username
-					</th>
-					<th>
-						Email
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var user in Model.Users)
-				{
+
+		<form method="post" asp-page-handler="delete" id="deleteUserForm">
+			<table class="table">
+				<thead>
 					<tr>
-						<td>@user.Id</td>
-						<td>@user.Username</td>
-						<td>@user.Email</td>
+						<th>
+							Id
+						</th>
+						<th>
+							Username
+						</th>
+						<th>
+							Email
+						</th>
+						<th>
+						</th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach (var user in Model.Users)
+					{
+						<tr>
+							<td>@user.Id</td>
+							<td>@user.Username</td>
+							<td>@user.Email</td>
+							<td>
+								<a class="btn btn-danger user-delete-btn" data-id="@user.Id">
+									Delete
+								</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+			<input type="hidden" asp-for="SelectedUserId"  id="selectedUserId"/>
+		</form>
+
 	</div>
 </div>
 
@@ -101,3 +113,22 @@
 		</div>
 	</div>
 </form>
+
+
+@section Scripts
+{
+	<script>
+		const userDeleteElements = document.querySelectorAll('.user-delete-btn');
+		const selectedUserIdElement = document.getElementById('selectedUserId');
+		const deleteUserFormElement = document.getElementById('deleteUserForm');
+
+		userDeleteElements.forEach((element) => {
+			element.addEventListener('click', function () {
+
+				const userId = element.dataset.id;
+				selectedUserIdElement.value = userId;
+				deleteUserFormElement.submit();
+			})
+		})
+	</script>
+}
