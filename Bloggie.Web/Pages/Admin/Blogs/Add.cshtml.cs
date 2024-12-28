@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using Bloggie.Web.Data;
 using Bloggie.Web.Models.Domain;
@@ -18,13 +19,14 @@ namespace Bloggie.Web.Pages.Admin.Blogs
         public AddBlogPost AddBlogPostRequest { get; set; }
 
         [BindProperty]
-        public  IFormFile FeaturedImage { get; set; }
+        public IFormFile FeaturedImage { get; set; }
 
         [BindProperty]
+        [Required]
         public string Tags { get; set; }
 
         public AddModel(IBlogPostRepository blogPostRepository)
-        {            
+        {
             this.blogPostRepository = blogPostRepository;
         }
 
@@ -32,32 +34,50 @@ namespace Bloggie.Web.Pages.Admin.Blogs
         {
         }
 
-        public async Task<IActionResult> OnPost() 
+        public async Task<IActionResult> OnPost()
         {
-            var blogPost = new BlogPost() {
-                Heading = AddBlogPostRequest.Heading,
-                PageTitle = AddBlogPostRequest.PageTitle,
-                Content = AddBlogPostRequest.Content,
-                ShortDescription = AddBlogPostRequest.ShortDescription,
-                FeaturedImageUrl = AddBlogPostRequest.FeaturedImageUrl,
-                UrlHandle = AddBlogPostRequest.UrlHandle,
-                PublishedDate = AddBlogPostRequest.PublishedDate,
-                Author = AddBlogPostRequest.Author,
-                Visible = AddBlogPostRequest.Visible,
-                Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag() { Name = x.Trim() }))
-            };
-
-            await blogPostRepository.AddAsync(blogPost);
-
-            var notification = new Notification
+            ValidateAddBlogPost();
+            if (ModelState.IsValid)
             {
-                Type = Enums.NotificationType.Success,
-                Message = "New Blog created!"
-            };
+                var blogPost = new BlogPost()
+                {
+                    Heading = AddBlogPostRequest.Heading,
+                    PageTitle = AddBlogPostRequest.PageTitle,
+                    Content = AddBlogPostRequest.Content,
+                    ShortDescription = AddBlogPostRequest.ShortDescription,
+                    FeaturedImageUrl = AddBlogPostRequest.FeaturedImageUrl,
+                    UrlHandle = AddBlogPostRequest.UrlHandle,
+                    PublishedDate = AddBlogPostRequest.PublishedDate,
+                    Author = AddBlogPostRequest.Author,
+                    Visible = AddBlogPostRequest.Visible,
+                    Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag() { Name = x.Trim() }))
+                };
 
-            TempData["Notification"] = JsonSerializer.Serialize(notification);
+                await blogPostRepository.AddAsync(blogPost);
 
-            return RedirectToPage("/Admin/Blogs/List");
+                var notification = new Notification
+                {
+                    Type = Enums.NotificationType.Success,
+                    Message = "New Blog created!"
+                };
+
+                TempData["Notification"] = JsonSerializer.Serialize(notification);
+
+                return RedirectToPage("/Admin/Blogs/List");
+            }
+
+            return Page();
+
+        }
+
+
+        private void ValidateAddBlogPost()
+        {
+            if (AddBlogPostRequest.PublishedDate.Date < DateTime.Now.Date)
+            {
+                ModelState.AddModelError("AddBlogPostRequest.PublishedDate", $"PublishedDate can only be today's date or a future date");
+            }
         }
     }
 }
+

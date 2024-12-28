@@ -14,22 +14,26 @@
 		<form method="post">
 			<div class="mb-3">
 				<label for="heading" class="form-label">Heading</label>
-				<input type="text" class="form-control" id="heading" asp-for="AddBlogPostRequest.Heading">
+				<input type="text" class="form-control" id="heading" asp-for="AddBlogPostRequest.Heading" required>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.Heading"></span>
 			</div>
 
 			<div class="mb-3">
 				<label for="pageTitle" class="form-label">Page Title</label>
-				<input type="text" class="form-control" id="pageTitle" asp-for="AddBlogPostRequest.PageTitle">
+				<input type="text" class="form-control" id="pageTitle" asp-for="AddBlogPostRequest.PageTitle" required>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.PageTitle"></span>
 			</div>
 
 			<div class="mb-3">
 				<label for="content" class="form-label">Content</label>
-				<textarea class="form-control" id="content" asp-for="AddBlogPostRequest.Content"></textarea>
+				<textarea class="form-control" id="content" asp-for="AddBlogPostRequest.Content" required></textarea>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.Content"></span>
 			</div>
 
 			<div class="mb-3">
 				<label for="shortDescription" class="form-label">Short Description</label>
-				<input type="text" class="form-control" id="shortDescription" asp-for="AddBlogPostRequest.ShortDescription">
+				<input type="text" class="form-control" id="shortDescription" asp-for="AddBlogPostRequest.ShortDescription" required>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.ShortDescription"></span>
 			</div>
 
 			<div class="mb-3">
@@ -40,27 +44,32 @@
 
 			<div class="mb-3">
 				<label for="featuredImageUrl" class="form-label">Featured Image URL</label>
-				<input type="text" class="form-control" id="featuredImageUrl" asp-for="AddBlogPostRequest.FeaturedImageUrl">
+				<input type="text" class="form-control" id="featuredImageUrl" asp-for="AddBlogPostRequest.FeaturedImageUrl" required>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.FeaturedImageUrl"></span>
 			</div>
 
 			<div class="mb-3">
 				<label for="urlHandle" class="form-label">URL Handle</label>
-				<input type="text" class="form-control" id="urlHandle" asp-for="AddBlogPostRequest.UrlHandle">
+				<input type="text" class="form-control" id="urlHandle" asp-for="AddBlogPostRequest.UrlHandle" required>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.UrlHandle"></span>
 			</div>
 
 			<div class="mb-3">
 				<label for="publishedDate" class="form-label">Published Date</label>
-				<input type="date" class="form-control" id="publishedDate" asp-for="AddBlogPostRequest.PublishedDate">
+				<input type="date" class="form-control" id="publishedDate" asp-for="AddBlogPostRequest.PublishedDate" required>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.PublishedDate"></span>
 			</div>
 
 			<div class="mb-3">
 				<label for="author" class="form-label">Author</label>
-				<input type="text" class="form-control" id="author" asp-for="AddBlogPostRequest.Author">
+				<input type="text" class="form-control" id="author" asp-for="AddBlogPostRequest.Author" required>
+				<span class="text-danger" asp-validation-for="AddBlogPostRequest.Author"></span>
 			</div>
 
 			<div class="mb-3">
 				<label for="tags" class="form-label">Tags (comma separated)</label>
-				<input type="text" class="form-control" id="tags" asp-for="Tags">
+				<input type="text" class="form-control" id="tags" asp-for="Tags" required>
+				<span class="text-danger" asp-validation-for="Tags"></span>
 			</div>
 
 			<div class="form-check mb-3">
