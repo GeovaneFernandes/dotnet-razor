@@ -13,6 +13,12 @@
 
 <div>
 	<div class="container">
+		<div class="mb-3 d-flex justify-content-end">
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addUserModal">
+				Add User
+			</button>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
@@ -40,3 +46,58 @@
 		</table>
 	</div>
 </div>
+
+
+
+<form method="post">
+<!-- Modal -->
+	<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">Add User</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3">
+						<label class="form-label">Username</label>
+						<input type="text" class="form-control" asp-for="AddUserRequest.Username" />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Email</label>
+						<input type="email" class="form-control" asp-for="AddUserRequest.Email" />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Password</label>
+						<input type="password" class="form-control" asp-for="AddUserRequest.Password" />
+					</div>
+					<div class="mb-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="User" checked disabled>
+							<label class="form-check-label" for="flexCheckDefault">
+								User Role
+							</label>
+						</div>
+
+
+						@if (User.IsInRole("SuperAdmin"))
+						{
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" asp-for="AddUserRequest.AdminCheckbox">
+								<label class="form-check-label" for="flexCheckChecked">
+									Admin Role
+								</label>
+							</div>
+						}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-dark">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
