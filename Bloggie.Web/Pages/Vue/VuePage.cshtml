@@ -1,0 +1,20 @@
+﻿@page
+@model VuePageModel
+@{
+    ViewData["Title"] = "Vue Component Page";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2>VueJS Embedded in Razor Page</h2>
+            <div id="vue-app">
+                <vue-component></vue-component>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/vueComponent.js"></script>
+}
