@@ -1,4 +1,6 @@
-﻿@page
+﻿
+
+@page
 @model Bloggie.Web.Pages.Admin.Blogs.AddModel
 @{
 }
@@ -69,7 +71,7 @@
 
 			<div class="mb-3">
 				<label for="tags" class="form-label">Tags (comma separated)</label>
-				<input type="text" class="form-control" id="tags" asp-for="Tags" required>
+				<input type="text" class="form-control " id="tags" asp-for="Tags" required>
 				<span class="text-danger" asp-validation-for="Tags"></span>
 			</div>
 
@@ -81,7 +83,7 @@
 			</div>
 
 			<div class="mb-3">
-				<button class="btn btn-primary" type="submit">Submit</button>
+				<button class="btn btn-primary custom-button" type="submit">Submit</button>
 			</div>
 
 		</form>
@@ -90,6 +92,42 @@
 
 
 @section Scripts {
+
+	<style>
+		.custom-input {
+			background-color: #D9D9D9;
+			border: 5px solid #007E89;
+			border-radius: 15px;
+			padding: 10px 15px;
+			width: 100%;
+			box-sizing: border-box;
+			font-size: 1rem;
+			color: #000000;
+		}
+
+		.custom-button {
+			background-color: #FF6A00; /* laranja vibrante como na imagem */
+			border: none;
+			padding: 10px 20px;
+			color: white;
+			font-weight: bold;
+			border-radius: 10px;
+			transition: 0.2s ease-in-out;
+		}
+
+			.custom-button:hover {
+				background-color: #cc5500;
+				cursor: pointer;
+			}
+
+		.froala-custom {
+			background-color: #D9D9D9 !important;
+			border: 5px solid #007E89 !important;
+			border-radius: 15px !important;
+			padding: 10px 15px;
+		}
+	</style>
+
 	<script>
 		var editor = new FroalaEditor('#content', {
 			imageUploadURL: '/api/images'
