@@ -7,6 +7,7 @@ using Bloggie.Web.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 
 namespace Bloggie.Web.Pages.Admin.Blogs
 {
@@ -14,20 +15,26 @@ namespace Bloggie.Web.Pages.Admin.Blogs
     public class AddModel : PageModel
     {
         private readonly IBlogPostRepository blogPostRepository;
+        private readonly ILogger<AddModel> logger;
 
         [BindProperty]
         public AddBlogPost AddBlogPostRequest { get; set; }
 
-        [BindProperty]
-        public IFormFile FeaturedImage { get; set; }
+        //[BindProperty]
+        //public IFormFile FeaturedImage { get; set; }
+
+        [BindProperty(SupportsGet = false)]
+        public IFormFile? FeaturedImage { get; set; }
+
 
         [BindProperty]
         [Required]
         public string Tags { get; set; }
 
-        public AddModel(IBlogPostRepository blogPostRepository)
+        public AddModel(IBlogPostRepository blogPostRepository, ILogger<AddModel> logger)
         {
             this.blogPostRepository = blogPostRepository;
+            this.logger = logger;
         }
 
         public void OnGet()
@@ -37,9 +44,25 @@ namespace Bloggie.Web.Pages.Admin.Blogs
         public async Task<IActionResult> OnPost()
         {
             ValidateAddBlogPost();
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
-                var blogPost = new BlogPost()
+                logger.LogWarning("ModelState is invalid. Errors:");
+
+                foreach (var state in ModelState)
+                {
+                    foreach (var error in state.Value.Errors)
+                    {
+                        logger.LogWarning("Field: {Field}, Error: {Error}", state.Key, error.ErrorMessage);
+                    }
+                }
+
+                return Page();
+            }
+
+            try
+            {
+                var blogPost = new BlogPost
                 {
                     Heading = AddBlogPostRequest.Heading,
                     PageTitle = AddBlogPostRequest.PageTitle,
@@ -50,7 +73,7 @@ namespace Bloggie.Web.Pages.Admin.Blogs
                     PublishedDate = AddBlogPostRequest.PublishedDate,
                     Author = AddBlogPostRequest.Author,
                     Visible = AddBlogPostRequest.Visible,
-                    Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag() { Name = x.Trim() }))
+                    Tags = new List<Tag>(Tags.Split(',').Select(x => new Tag { Name = x.Trim() }))
                 };
 
                 await blogPostRepository.AddAsync(blogPost);
@@ -65,11 +88,14 @@ namespace Bloggie.Web.Pages.Admin.Blogs
 
                 return RedirectToPage("/Admin/Blogs/List");
             }
-
-            return Page();
-
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while adding the blog post.");
+                // Optional: show a generic error message
+                ModelState.AddModelError(string.Empty, "An unexpected error occurred. Please try again.");
+                return Page();
+            }
         }
-
 
         private void ValidateAddBlogPost()
         {
@@ -80,4 +106,3 @@ namespace Bloggie.Web.Pages.Admin.Blogs
         }
     }
 }
-

@@ -25,38 +25,52 @@
         <div class="col-6">
 
             <h2 class="mb-5 display-3">Results</h2>
-            <div class="mb-5">
-                @if (Model.Tags != null && Model.Tags.Any())
-                { 
-                    foreach(var tag in Model.Tags)
-                    {
-                        <a href="/tags/@tag.Name">
-                            <span class="badge bg-dark">
-                                @tag.Name
-                            </span>
-                        </a>
-                    }
+            <style>
+                .btn-readmore {
+                    background-color: #FC5D0D !important;
+                    border-color: #FC5D0D !important;
+                    color: #fff !important;
                 }
-            </div>
+
+                    .btn-readmore:hover {
+                        background-color: #e6530c !important;
+                        border-color: #e6530c !important;
+                        color: #fff !important;
+                    }
+            </style>
+             <div class="mb-3"> 
+                 @if (Model.Tags != null && Model.Tags.Any()) 
+                {  
+                    foreach(var tag in Model.Tags) 
+                    { 
+                        <a href="/tags/@tag.Name"> 
+                             <span class="badge bg-dark"> 
+                                @tag.Name 
+                             </span> 
+                        </a> 
+                    } 
+                 } 
+             </div> 
             @if (Model.Blogs != null && Model.Blogs.Any())
             {
                 @foreach (var blog in Model.Blogs)
                 {
                     <div class="mb-5 bg-light box-shadow">
-                        <img src="@blog.FeaturedImageUrl" alt="@blog.Heading" class="mb-2 d-block img-fluid" />
+                        @* <img src="@blog.FeaturedImageUrl" alt="@blog.Heading" class="mb-2 d-block img-fluid" /> *@
                         <div class="px-4 py-4">
                             <h2 class="mb-2">
                                 @blog.Heading
                             </h2>
+                            <p class="mb-2">
+                                @blog.ShortDescription
+                            </p>
                             <p>
                                 Author: @blog.Author
                                 <br />
                                 Date Published: @blog.PublishedDate.ToShortDateString()
                             </p>
-                            <p class="mb-2">
-                                @blog.ShortDescription
-                            </p>
-                            <a href="/blog/@blog.UrlHandle" class="btn btn-dark">
+                            
+                            <a href="/blog/@blog.UrlHandle" class="btn btn-readmore">
                                 Read More
                             </a>
                         </div>
