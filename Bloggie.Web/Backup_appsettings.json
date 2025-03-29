@@ -1,0 +1,18 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+    "AllowedHosts": "*",
+    "ConnectionStrings": {
+        "BloggieDbConnectionString": "Server=localhost\\MSSQLSERVER01;Database=BloggieDb;Trusted_Connection=True;TrustServerCertificate=True",
+        "BloggieAuthDbConnectionString": "Server=localhost\\MSSQLSERVER01;Database=BloggieAuthDb;Trusted_Connection=True;TrustServerCertificate=True"
+    },
+    "Cloudinary": {
+        "CloudName": "dawtyc1zv",
+        "ApiKey": "112352988179763",
+        "ApiSecret": "oGVRzOuXY25SoZC1hqv_J5JcrUM"
+    }
+}
